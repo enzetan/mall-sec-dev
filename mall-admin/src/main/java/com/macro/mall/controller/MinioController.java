@@ -62,7 +62,7 @@ public class MinioController {
                         .build();
                 minioClient.setBucketPolicy(setBucketPolicyArgs);
             }
-            String filename = file.getOriginalFilename();
+            String filename = cleanFileName(file.getOriginalFilename());
             SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
             // 设置存储对象名称
             String objectName = sdf.format(new Date()) + "/" + filename;
@@ -115,5 +115,28 @@ public class MinioController {
             e.printStackTrace();
         }
         return CommonResult.failed();
+    }
+
+    private String cleanFileName(String filename) {
+        filename = filename.replaceAll(" ", "_");
+        filename = filename.replaceAll("：", ":");
+        filename = filename.replaceAll("，", "");
+        filename = filename.replaceAll(",", "");
+        filename = filename.replaceAll("。", "");
+        filename = filename.replaceAll("、", "");
+        filename = filename.replaceAll("；", "");
+        filename = filename.replaceAll(";", "");
+        filename = filename.replaceAll("？", "");
+        filename = filename.replaceAll("！", "");
+        filename = filename.replaceAll("!", "");
+        filename = filename.replaceAll("“", "");
+        filename = filename.replaceAll("\"", "");
+        filename = filename.replaceAll("”", "");
+        filename = filename.replaceAll("‘", "");
+        filename = filename.replaceAll("'", "");
+        filename = filename.replaceAll("’", "");
+        filename = filename.replaceAll("（", "(");
+        filename = filename.replaceAll("）", ")");
+        return filename;
     }
 }

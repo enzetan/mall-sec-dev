@@ -23,8 +23,13 @@ import java.util.List;
 @Tag(name = "OmsOrderController", description = "订单管理")
 @RequestMapping("/order")
 public class OmsOrderController {
-    @Autowired
+
     private OmsOrderService orderService;
+
+    @Autowired
+    public void setOrderService(OmsOrderService orderService) {
+        this.orderService = orderService;
+    }
 
     @ApiOperation("查询订单")
     @RequestMapping(value = "/list", method = RequestMethod.GET)
