@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.macro.mall.mapper.CmsHelpCategoryMapper">
-  <resultMap id="BaseResultMap" type="com.macro.mall.model.CmsHelpCategory">
-    <id column="id" jdbcType="BIGINT" property="id" />
+<mapper namespace="com.macro.mall.mapper.MediaMasterFileMapper">
+  <resultMap id="BaseResultMap" type="com.macro.mall.model.MediaMasterFile">
+    <id column="id" jdbcType="INTEGER" property="id" />
     <result column="name" jdbcType="VARCHAR" property="name" />
-    <result column="icon" jdbcType="VARCHAR" property="icon" />
-    <result column="help_count" jdbcType="INTEGER" property="helpCount" />
-    <result column="show_status" jdbcType="INTEGER" property="showStatus" />
-    <result column="sort" jdbcType="INTEGER" property="sort" />
+    <result column="path" jdbcType="VARCHAR" property="path" />
+    <result column="type" jdbcType="VARCHAR" property="type" />
+    <result column="size" jdbcType="INTEGER" property="size" />
+    <result column="created_at" jdbcType="TIMESTAMP" property="createdAt" />
+    <result column="updated_at" jdbcType="TIMESTAMP" property="updatedAt" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -68,15 +69,15 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, name, icon, help_count, show_status, sort
+    id, name, path, type, size, created_at, updated_at
   </sql>
-  <select id="selectByExample" parameterType="com.macro.mall.model.CmsHelpCategoryExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="com.macro.mall.model.MediaMasterFileExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from cms_help_category
+    from media_master_file
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -84,97 +85,108 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from cms_help_category
-    where id = #{id,jdbcType=BIGINT}
+    from media_master_file
+    where id = #{id,jdbcType=INTEGER}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-    delete from cms_help_category
-    where id = #{id,jdbcType=BIGINT}
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from media_master_file
+    where id = #{id,jdbcType=INTEGER}
   </delete>
-  <delete id="deleteByExample" parameterType="com.macro.mall.model.CmsHelpCategoryExample">
-    delete from cms_help_category
+  <delete id="deleteByExample" parameterType="com.macro.mall.model.MediaMasterFileExample">
+    delete from media_master_file
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.macro.mall.model.CmsHelpCategory">
-    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+  <insert id="insert" parameterType="com.macro.mall.model.MediaMasterFile">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into cms_help_category (name, icon, help_count, 
-      show_status, sort)
-    values (#{name,jdbcType=VARCHAR}, #{icon,jdbcType=VARCHAR}, #{helpCount,jdbcType=INTEGER}, 
-      #{showStatus,jdbcType=INTEGER}, #{sort,jdbcType=INTEGER})
+    insert into media_master_file (name, path, type, 
+      size, created_at, updated_at
+      )
+    values (#{name,jdbcType=VARCHAR}, #{path,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, 
+      #{size,jdbcType=INTEGER}, #{createdAt,jdbcType=TIMESTAMP}, #{updatedAt,jdbcType=TIMESTAMP}
+      )
   </insert>
-  <insert id="insertSelective" parameterType="com.macro.mall.model.CmsHelpCategory">
-    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+  <insert id="insertSelective" parameterType="com.macro.mall.model.MediaMasterFile">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into cms_help_category
+    insert into media_master_file
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="name != null">
         name,
       </if>
-      <if test="icon != null">
-        icon,
+      <if test="path != null">
+        path,
       </if>
-      <if test="helpCount != null">
-        help_count,
+      <if test="type != null">
+        type,
       </if>
-      <if test="showStatus != null">
-        show_status,
+      <if test="size != null">
+        size,
       </if>
-      <if test="sort != null">
-        sort,
+      <if test="createdAt != null">
+        created_at,
+      </if>
+      <if test="updatedAt != null">
+        updated_at,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="name != null">
         #{name,jdbcType=VARCHAR},
       </if>
-      <if test="icon != null">
-        #{icon,jdbcType=VARCHAR},
+      <if test="path != null">
+        #{path,jdbcType=VARCHAR},
       </if>
-      <if test="helpCount != null">
-        #{helpCount,jdbcType=INTEGER},
+      <if test="type != null">
+        #{type,jdbcType=VARCHAR},
       </if>
-      <if test="showStatus != null">
-        #{showStatus,jdbcType=INTEGER},
+      <if test="size != null">
+        #{size,jdbcType=INTEGER},
       </if>
-      <if test="sort != null">
-        #{sort,jdbcType=INTEGER},
+      <if test="createdAt != null">
+        #{createdAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedAt != null">
+        #{updatedAt,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.macro.mall.model.CmsHelpCategoryExample" resultType="java.lang.Long">
-    select count(*) from cms_help_category
+  <select id="countByExample" parameterType="com.macro.mall.model.MediaMasterFileExample" resultType="java.lang.Long">
+    select count(*) from media_master_file
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update cms_help_category
+    update media_master_file
     <set>
       <if test="row.id != null">
-        id = #{row.id,jdbcType=BIGINT},
+        id = #{row.id,jdbcType=INTEGER},
       </if>
       <if test="row.name != null">
         name = #{row.name,jdbcType=VARCHAR},
       </if>
-      <if test="row.icon != null">
-        icon = #{row.icon,jdbcType=VARCHAR},
+      <if test="row.path != null">
+        path = #{row.path,jdbcType=VARCHAR},
       </if>
-      <if test="row.helpCount != null">
-        help_count = #{row.helpCount,jdbcType=INTEGER},
+      <if test="row.type != null">
+        type = #{row.type,jdbcType=VARCHAR},
       </if>
-      <if test="row.showStatus != null">
-        show_status = #{row.showStatus,jdbcType=INTEGER},
+      <if test="row.size != null">
+        size = #{row.size,jdbcType=INTEGER},
       </if>
-      <if test="row.sort != null">
-        sort = #{row.sort,jdbcType=INTEGER},
+      <if test="row.createdAt != null">
+        created_at = #{row.createdAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="row.updatedAt != null">
+        updated_at = #{row.updatedAt,jdbcType=TIMESTAMP},
       </if>
     </set>
     <if test="example != null">
@@ -182,45 +194,50 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update cms_help_category
-    set id = #{row.id,jdbcType=BIGINT},
+    update media_master_file
+    set id = #{row.id,jdbcType=INTEGER},
       name = #{row.name,jdbcType=VARCHAR},
-      icon = #{row.icon,jdbcType=VARCHAR},
-      help_count = #{row.helpCount,jdbcType=INTEGER},
-      show_status = #{row.showStatus,jdbcType=INTEGER},
-      sort = #{row.sort,jdbcType=INTEGER}
+      path = #{row.path,jdbcType=VARCHAR},
+      type = #{row.type,jdbcType=VARCHAR},
+      size = #{row.size,jdbcType=INTEGER},
+      created_at = #{row.createdAt,jdbcType=TIMESTAMP},
+      updated_at = #{row.updatedAt,jdbcType=TIMESTAMP}
     <if test="example != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.macro.mall.model.CmsHelpCategory">
-    update cms_help_category
+  <update id="updateByPrimaryKeySelective" parameterType="com.macro.mall.model.MediaMasterFile">
+    update media_master_file
     <set>
       <if test="name != null">
         name = #{name,jdbcType=VARCHAR},
       </if>
-      <if test="icon != null">
-        icon = #{icon,jdbcType=VARCHAR},
+      <if test="path != null">
+        path = #{path,jdbcType=VARCHAR},
       </if>
-      <if test="helpCount != null">
-        help_count = #{helpCount,jdbcType=INTEGER},
+      <if test="type != null">
+        type = #{type,jdbcType=VARCHAR},
       </if>
-      <if test="showStatus != null">
-        show_status = #{showStatus,jdbcType=INTEGER},
+      <if test="size != null">
+        size = #{size,jdbcType=INTEGER},
       </if>
-      <if test="sort != null">
-        sort = #{sort,jdbcType=INTEGER},
+      <if test="createdAt != null">
+        created_at = #{createdAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedAt != null">
+        updated_at = #{updatedAt,jdbcType=TIMESTAMP},
       </if>
     </set>
-    where id = #{id,jdbcType=BIGINT}
+    where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.macro.mall.model.CmsHelpCategory">
-    update cms_help_category
+  <update id="updateByPrimaryKey" parameterType="com.macro.mall.model.MediaMasterFile">
+    update media_master_file
     set name = #{name,jdbcType=VARCHAR},
-      icon = #{icon,jdbcType=VARCHAR},
-      help_count = #{helpCount,jdbcType=INTEGER},
-      show_status = #{showStatus,jdbcType=INTEGER},
-      sort = #{sort,jdbcType=INTEGER}
-    where id = #{id,jdbcType=BIGINT}
+      path = #{path,jdbcType=VARCHAR},
+      type = #{type,jdbcType=VARCHAR},
+      size = #{size,jdbcType=INTEGER},
+      created_at = #{createdAt,jdbcType=TIMESTAMP},
+      updated_at = #{updatedAt,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>
