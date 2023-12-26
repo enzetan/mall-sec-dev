@@ -28,7 +28,7 @@ public class CipMediaMasterController {
     private static final Logger LOGGER = LoggerFactory.getLogger(CipMediaMasterController.class);
 
     @ApiOperation(value = "文件上传")
-    @PostMapping("/upload")
+    @PostMapping()
     @ResponseBody
     public CommonResult<MediaFile> upload(@RequestBody MediaFile mediaFile) {
         LOGGER.info("file: ", mediaFile);
